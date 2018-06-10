@@ -1,0 +1,176 @@
+#define buzzer 12
+#include<Servo.h>
+int ir1;
+int ir2;
+int ir3;
+Servo servo1;
+Servo servo2;
+Servo servo3;
+void setup() {
+ pinMode(2,INPUT);//ir 1;
+pinMode(3,INPUT);//ir 2
+pinMode(4,INPUT);//ir 3
+servo1.attach(5);//servo motor 1
+servo2.attach(6);//servo motor 2
+servo3.attach(7);//servo motor 3
+pinMode(11,OUTPUT);// pump motor
+pinMode(buzzer,OUTPUT);// buzzer
+pinMode(13,OUTPUT);//led 1
+pinMode(A0,OUTPUT);//led 2
+pinMode(A1,OUTPUT);//led 3
+pinMode(A2,OUTPUT);//led 4
+pinMode(A3,OUTPUT);//led 5
+pinMode(A4,OUTPUT);//led 6
+servo1.write(0);
+servo2.write(0);
+servo3.write(0);
+Serial.begin(9600);
+}
+char c;
+int i1,i2,i3,i4,i5,i6;
+ 
+
+void loop() {
+  ir1==digitalRead(2);
+  ir2=digitalRead(3);
+  ir3=digitalRead(4);
+  if(Serial.available()>0)
+  {
+c=Serial.read(); 
+if(c=='a')
+    {
+    digitalWrite(13,HIGH);
+      servo1.write(90);
+     tone(buzzer,500);
+    pump();
+   delay(60000);
+   i1=1;
+   delay(1020000); //18 minutes
+ noTone(buzzer); 
+  
+}
+else if(c=='b')
+  {
+   
+    digitalWrite(A0,HIGH);
+    servo1.write(90);
+     tone(buzzer, 500);
+    pump();
+   delay(60000);//6 0 seconds
+   i2=1;
+   delay(1020000); //18 minutes
+  noTone(buzzer);
+    }
+  else if(c=='d')
+  {
+    
+    analogWrite(A3,1023);
+    servo3.write(90);
+   tone(buzzer, 500);
+   pump();
+   delay(60000);
+   i3=1;
+   delay(1020000); //18 minutes
+  noTone(buzzer); 
+  
+
+}
+else if(c=='e')
+  { digitalWrite(A4,HIGH);
+    servo3.write(90);
+     tone(buzzer, 500);
+  pump();
+   delay(60000);
+   i4=1;
+   delay(1020000); //18 minutes
+  noTone(buzzer);
+  }
+else if(c=='f')
+  {
+   
+    analogWrite(A1,1023);
+    servo2.write(90);
+    tone(buzzer, 500);
+     pump();
+   delay(60000);
+   i5=1;
+   delay(1020000); //18 minutes
+  noTone(buzzer); 
+ }
+else if(c=='g')
+  {
+  analogWrite(A2,1023);
+    servo2.write(90);
+   tone(buzzer, 500);
+    pump();
+   delay(60000);
+   i6=1;
+   delay(1020000); //18 minutes
+  noTone(buzzer); 
+  }
+
+else if(c=='h')
+  { 
+    servo1.write(90);
+}
+else if(c=='i')
+  { 
+    servo2.write(90);
+}else if(c=='j')
+  { 
+    servo3.write(90);
+}
+else if(c=='k')
+  { 
+    servo1.write(0);
+}
+else if(c=='l')
+  { 
+    servo2.write(0);
+}
+else if(c=='m')
+  { 
+    servo3.write(0);
+}
+  
+if (ir1==HIGH&&((i1==1)||(12==1)))
+
+{ digitalWrite(13,LOW);
+  digitalWrite(buzzer,LOW);
+  analogWrite(A0,0);
+ delay(1080000); //18 minutes
+servo1.write(0);    
+}
+else if(ir1==LOW&&((i1==1)||(12==1)))
+{Serial.print("d");
+  }
+if (ir2==HIGH&&((i3==1)||(14==1)))
+{digitalWrite(buzzer,LOW);
+delay(2000);
+  analogWrite(A1,0);
+  analogWrite(A2,0);
+  delay(1080000); //18 minutes
+servo2.write(0);    
+}
+else if(ir1==LOW&&((i1==1)||(12==1)))
+{Serial.print("d");
+  }
+if (ir3==LOW&&((i5==1)||(16==1)))
+{ digitalWrite(buzzer,LOW);
+   
+  delay(2000);
+  analogWrite(A3,0);
+  analogWrite(A4,0);
+  delay(180000); //18 minutes
+servo3.write(0);    
+}
+  }
+}
+
+void pump()
+{
+  digitalWrite(11,HIGH);
+  delay(20000);
+  digitalWrite(11,LOW);
+}
+ 
